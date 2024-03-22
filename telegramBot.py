@@ -4,8 +4,8 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Updater, CommandHandler, MessageHandler,ContextTypes, filters as Filters, CallbackContext,Application
 
 # Telegram bot token
-TOKEN = '7178929657:AAEJZVqRkuwxY8tm2B8KvUFPVxyW9KE9Mtk'
-CHANNEL_IDS = ['-1002013201225',"-1002076021265"]  
+TOKEN = {'YourToken'}
+CHANNEL_IDS = ['your channel ids']  
 
 # Fonksiyon: Verilen linkten ürün adını ve görselini alır
 def get_product_info(link):
@@ -69,14 +69,9 @@ async def handle_link(update: Update, context: CallbackContext) -> None:
         await context.bot.send_photo(chat_id=channel_id, photo=product_image, caption=message_text, reply_markup=message_markup, parse_mode='HTML')
 
 def main() -> None:
-    """Start the bot."""
-    # Create the Application and pass it your bot's token.
     application = Application.builder().token(TOKEN).build()
-
     application.add_handler(CommandHandler("start", start))
     application.add_handler(MessageHandler(Filters.TEXT& ~Filters.COMMAND, handle_link))
-
-    # Run the bot until the user presses Ctrl-C
     application.run_polling(allowed_updates=Update.ALL_TYPES)
 
 
